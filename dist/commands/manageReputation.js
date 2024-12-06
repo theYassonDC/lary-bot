@@ -66,7 +66,8 @@ ConfigCommand = __decorate([
         name: 'reputation-manage',
         description: 'Config reputation ',
         ignore: seyfert_1.IgnoreCommand.Slash,
-        aliases: ["rm"]
+        aliases: ["rm"],
+        defaultMemberPermissions: ["ManageGuild"]
     }),
     (0, seyfert_1.Options)(option)
 ], ConfigCommand);

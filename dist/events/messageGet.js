@@ -18,19 +18,21 @@ exports.default = (0, seyfert_1.createEvent)({
         return __awaiter(this, void 0, void 0, function* () {
             if (user.user.bot)
                 return;
+            const time = 5 * 60 * 1000;
             if (user.channelId === utils_1.config.channel) {
-                const time = 5 * 60 * 1000;
-                (0, utils_1.sleep)(time);
                 const userExits = yield (0, libs_1.getUser)(user.user.id);
                 if (userExits.user_id === user.user.id) {
                     const random = Math.floor(Math.random() * (3 - 1 + 1) + 1);
-                    yield (0, libs_1.updateUser)(user.user.id, 'add', random);
-                    const channel = yield client.channels.fetch(utils_1.config.logs);
-                    if (channel.isTextGuild()) {
-                        channel.messages.write({
-                            content: `**\`[LOGS]\`** El usuario **${user.user.name}** se le agrego la cantidad de **\`+${random}\`** de reputación por hablar en el chat`
-                        });
-                    }
+                    yield (0, utils_1.sleep)(time);
+                    setTimeout(() => __awaiter(this, void 0, void 0, function* () {
+                        yield (0, libs_1.updateUser)(user.user.id, 'add', random);
+                        const channel = yield client.channels.fetch(utils_1.config.logs);
+                        if (channel.isTextGuild()) {
+                            channel.messages.write({
+                                content: `**\`[LOGS]\`** El usuario **${user.user.name}** se le agrego la cantidad de **\`+${random}\`** de reputación por hablar en el chat`
+                            });
+                        }
+                    }), time);
                 }
                 else {
                     (0, libs_1.createUser)(user.user.id);
