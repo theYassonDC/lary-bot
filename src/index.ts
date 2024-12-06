@@ -1,6 +1,6 @@
 import { Client, ParseClient } from 'seyfert';
 import { CooldownManager } from '@slipher/cooldown';
-// import express from 'express';
+import express from 'express';
 
 const client = new Client({
   commands: {
@@ -18,6 +18,16 @@ client.start().then(() => {
   client.cooldown = new CooldownManager(client);
   client.loadEvents()
 });
+const app = express()
+const port =  process.env.PORT || 3000
+
+app.get('/', (_req, res) => {
+  res.send('Hello World!')
+})
+
+app.listen(port, () => {
+  console.log(`Example app listening on port ${port}`)
+})
 declare module 'seyfert' {
   interface UsingClient extends ParseClient<Client<true>> {
     cooldown: CooldownManager;
