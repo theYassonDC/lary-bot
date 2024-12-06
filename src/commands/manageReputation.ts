@@ -21,7 +21,8 @@ const option = {
   name: 'reputation-manage',
   description: 'Config reputation ',
   ignore: IgnoreCommand.Slash,
-  aliases: ["rm"]
+  aliases: ["rm"],
+  defaultMemberPermissions: ["ManageGuild"]
 })
 @Options(option)
 export default class ConfigCommand extends Command {

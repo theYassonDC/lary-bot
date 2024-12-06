@@ -6,9 +6,9 @@ export default createEvent({
   data: { once: false, name: "messageCreate" },
   async run(user, client) {
     if (user.user.bot) return
+    const time = 5 * 60 * 1000
+    sleep(time)
     if (user.channelId === config.channel) {
-      const time = 5 * 60 * 1000
-      sleep(time)
       const userExits = await getUser(user.user.id)
       if (userExits.user_id === user.user.id) {
         const random = Math.floor(Math.random() * (3 - 1 + 1) + 1)
