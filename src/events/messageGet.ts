@@ -7,7 +7,7 @@ export default createEvent({
   async run(user, client) {
     if (user.user.bot) return
     const time = 5 * 60 * 1000
-    sleep(time)
+    await sleep(time)
     if (user.channelId === config.channel) {
       const userExits = await getUser(user.user.id)
       if (userExits.user_id === user.user.id) {
