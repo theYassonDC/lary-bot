@@ -17,6 +17,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const seyfert_1 = require("seyfert");
 const libs_1 = require("../libs");
+const cooldown_1 = require("@slipher/cooldown");
 const utils_1 = require("../utils");
 const option = {
     id: (0, seyfert_1.createStringOption)({
@@ -62,6 +63,11 @@ let ConfigCommand = class ConfigCommand extends seyfert_1.Command {
     }
 };
 ConfigCommand = __decorate([
+    (0, cooldown_1.Cooldown)({
+        type: cooldown_1.CooldownType.User,
+        interval: 4000 * 60,
+        uses: 1,
+    }),
     (0, seyfert_1.Declare)({
         name: 'reputation-manage',
         description: 'Config reputation ',

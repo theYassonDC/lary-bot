@@ -17,6 +17,7 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
 Object.defineProperty(exports, "__esModule", { value: true });
 const seyfert_1 = require("seyfert");
 const libs_1 = require("../libs");
+const cooldown_1 = require("@slipher/cooldown");
 let ReputationCommand = class ReputationCommand extends seyfert_1.Command {
     run(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
@@ -48,6 +49,11 @@ ReputationCommand = __decorate([
         description: 'Mira la reputación que tienes o un usuario',
         ignore: seyfert_1.IgnoreCommand.Slash,
         aliases: ["rep", "r", "score"]
+    }),
+    (0, cooldown_1.Cooldown)({
+        type: cooldown_1.CooldownType.User,
+        interval: 1000 * 60,
+        uses: 2,
     })
 ], ReputationCommand);
 exports.default = ReputationCommand;

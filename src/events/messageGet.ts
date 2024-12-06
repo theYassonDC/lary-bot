@@ -12,15 +12,13 @@ export default createEvent({
       if (userExits.user_id === user.user.id) {
         const random = Math.floor(Math.random() * (3 - 1 + 1) + 1)
         await sleep(time)
-        setTimeout(async () => {
-          await updateUser(user.user.id, 'add', random)
-          const channel = await client.channels.fetch(config.logs)
-          if (channel.isTextGuild()) {
-            channel.messages.write({
-              content: `**\`[LOGS]\`** El usuario **${user.user.name}** se le agrego la cantidad de **\`+${random}\`** de reputación por hablar en el chat`
-            })
-          }
-        }, time)
+        await updateUser(user.user.id, 'add', random)
+        const channel = await client.channels.fetch(config.logs)
+        if (channel.isTextGuild()) {
+          channel.messages.write({
+            content: `**\`[LOGS]\`** El usuario **${user.user.name}** se le agrego la cantidad de **\`+${random}\`** de reputación por hablar en el chat`
+          })
+        }
       } else {
         createUser(user.user.id)
         const channel = await client.channels.fetch(config.logs)
