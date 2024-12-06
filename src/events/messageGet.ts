@@ -7,11 +7,11 @@ export default createEvent({
   async run(user, client) {
     if (user.user.bot) return
     const time = 5 * 60 * 1000
-    await sleep(time)
     if (user.channelId === config.channel) {
       const userExits = await getUser(user.user.id)
       if (userExits.user_id === user.user.id) {
         const random = Math.floor(Math.random() * (3 - 1 + 1) + 1)
+        await sleep(time)
         await updateUser(user.user.id, 'add', random)
         const channel = await client.channels.fetch(config.logs)
         if (channel.isTextGuild()) {
