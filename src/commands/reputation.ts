@@ -1,11 +1,17 @@
 import { Declare, Command, type CommandContext, IgnoreCommand, Embed } from 'seyfert';
 import { getUser } from '../libs';
+import { Cooldown, CooldownType } from '@slipher/cooldown';
 
 @Declare({
   name: 'reputation',
   description: 'Mira la reputación que tienes o un usuario',
   ignore: IgnoreCommand.Slash,
   aliases: ["rep", "r", "score"]
+})
+@Cooldown({
+  type: CooldownType.User,
+  interval: 1000 * 60,
+  uses: 2,
 })
 export default class ReputationCommand extends Command {
   async run(ctx: CommandContext) {

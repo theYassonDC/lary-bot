@@ -1,5 +1,6 @@
 import { Declare, Command, type CommandContext, IgnoreCommand, createStringOption, createNumberOption, Options } from 'seyfert';
 import { updateUser } from '../libs';
+import { Cooldown, CooldownType } from '@slipher/cooldown';
 import { config } from '../utils';
 
 const option = {
@@ -17,6 +18,11 @@ const option = {
   })
 }
 
+@Cooldown({
+  type: CooldownType.User,
+  interval: 4000 * 60,
+  uses: 1,
+})
 @Declare({
   name: 'reputation-manage',
   description: 'Config reputation ',
