@@ -11,8 +11,6 @@ const client = new Client({
   },
 });
 
-// Esto iniciará la conexión con la gateway de Discord y cargará comandos, eventos, componentes y langs
-
 client.start().then(() => {
   client.cooldown = new CooldownManager(client);
   client.uploadCommands()
@@ -23,7 +21,7 @@ declare module 'seyfert' {
   }
   interface InternalOptions {
     withPrefix: true | false;
-    asyncCache: true | false;
+    asyncCache: false | true;
   }
   interface Client {
     cooldown: CooldownManager;
