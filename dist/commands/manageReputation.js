@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -14,35 +13,34 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const seyfert_1 = require("seyfert");
-const libs_1 = require("../libs");
-const cooldown_1 = require("@slipher/cooldown");
-const utils_1 = require("../utils");
+import { Declare, Command, IgnoreCommand, createStringOption, createNumberOption, Options } from 'seyfert';
+import { updateUser } from '../libs';
+import { Cooldown, CooldownType } from '@slipher/cooldown';
+import { config } from '../utils';
 const option = {
-    id: (0, seyfert_1.createStringOption)({
+    id: createStringOption({
         description: 'id',
         required: true,
     }),
-    type: (0, seyfert_1.createStringOption)({
+    type: createStringOption({
         description: 'type manage',
         required: true
     }),
-    amount: (0, seyfert_1.createNumberOption)({
+    amount: createNumberOption({
         description: 'number amount',
         required: true
     })
 };
-let ConfigCommand = class ConfigCommand extends seyfert_1.Command {
+let ConfigCommand = class ConfigCommand extends Command {
     run(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
             const options = ctx.options;
             if (!options.id || !options) {
                 return ctx.write({ content: 'Te falto el usuario el comando es `r!reputation-manage -id <user-id> -type <add o remove> -amount <cuantity>`' });
             }
-            const channel = yield ctx.client.channels.fetch(utils_1.config.logs);
+            const channel = yield ctx.client.channels.fetch(config.logs);
             if (options.type === "add") {
-                yield (0, libs_1.updateUser)(options.id, 'add', options.amount);
+                yield updateUser(options.id, 'add', options.amount);
                 if (channel.isTextGuild()) {
                     channel.messages.write({
                         content: `:green_circle: **\`[LOGS]\`** El usuario **<@${options.id}>** se le agrego la cantidad de ${options.amount}`
@@ -51,7 +49,7 @@ let ConfigCommand = class ConfigCommand extends seyfert_1.Command {
                 return ctx.write({ content: `:white_check_mark: El usuario <@${options.id}> se le agrego la cantidad ${options.amount} de reputación correctamente` });
             }
             else if (options.type === "remove") {
-                yield (0, libs_1.updateUser)(options.id, 'remove', options.amount);
+                yield updateUser(options.id, 'remove', options.amount);
                 if (channel.isTextGuild()) {
                     channel.messages.write({
                         content: `:red_circle: **\`[LOGS]\`**El usuario **<@${options.id}>** se le removio la cantidad de ${options.amount} puntos`
@@ -63,18 +61,18 @@ let ConfigCommand = class ConfigCommand extends seyfert_1.Command {
     }
 };
 ConfigCommand = __decorate([
-    (0, cooldown_1.Cooldown)({
-        type: cooldown_1.CooldownType.User,
+    Cooldown({
+        type: CooldownType.User,
         interval: 4000 * 60,
         uses: 1,
     }),
-    (0, seyfert_1.Declare)({
+    Declare({
         name: 'reputation-manage',
         description: 'Config reputation ',
-        ignore: seyfert_1.IgnoreCommand.Slash,
+        ignore: IgnoreCommand.Slash,
         aliases: ["rm"],
         defaultMemberPermissions: ["ManageGuild"]
     }),
-    (0, seyfert_1.Options)(option)
+    Options(option)
 ], ConfigCommand);
-exports.default = ConfigCommand;
+export default ConfigCommand;

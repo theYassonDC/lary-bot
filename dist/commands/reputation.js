@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -14,11 +13,10 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const seyfert_1 = require("seyfert");
-const libs_1 = require("../libs");
-const cooldown_1 = require("@slipher/cooldown");
-let ReputationCommand = class ReputationCommand extends seyfert_1.Command {
+import { Declare, Command, IgnoreCommand, Embed } from 'seyfert';
+import { getUser } from '../libs';
+import { Cooldown, CooldownType } from '@slipher/cooldown';
+let ReputationCommand = class ReputationCommand extends Command {
     run(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
             var _a;
@@ -28,12 +26,12 @@ let ReputationCommand = class ReputationCommand extends seyfert_1.Command {
             }
             if (args) {
                 const userId = args.match(/\d+/);
-                const data = yield (0, libs_1.getUser)(String(userId));
+                const data = yield getUser(String(userId));
                 if (!data)
                     return ctx.write({ content: 'Este usuario no tiene puntos de reputacion' });
                 ctx.write({
                     embeds: [
-                        new seyfert_1.Embed()
+                        new Embed()
                             .setDescription(`## Reputación tranquilisera <@${userId}>`)
                             .setFields([{ name: 'Puntos de reputación', value: `:green_circle: ${data.reputation}` }])
                             .setColor("Green")
@@ -44,16 +42,16 @@ let ReputationCommand = class ReputationCommand extends seyfert_1.Command {
     }
 };
 ReputationCommand = __decorate([
-    (0, seyfert_1.Declare)({
+    Declare({
         name: 'reputation',
         description: 'Mira la reputación que tienes o un usuario',
-        ignore: seyfert_1.IgnoreCommand.Slash,
+        ignore: IgnoreCommand.Slash,
         aliases: ["rep", "r", "score"]
     }),
-    (0, cooldown_1.Cooldown)({
-        type: cooldown_1.CooldownType.User,
+    Cooldown({
+        type: CooldownType.User,
         interval: 1000 * 60,
         uses: 2,
     })
 ], ReputationCommand);
-exports.default = ReputationCommand;
+export default ReputationCommand;

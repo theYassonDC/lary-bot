@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -14,9 +13,8 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const seyfert_1 = require("seyfert");
-let PingCmd = class PingCmd extends seyfert_1.Command {
+import { Declare, Command, IgnoreCommand } from 'seyfert';
+let PingCmd = class PingCmd extends Command {
     run(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
             const ping = ctx.client.gateway.latency;
@@ -27,10 +25,10 @@ let PingCmd = class PingCmd extends seyfert_1.Command {
     }
 };
 PingCmd = __decorate([
-    (0, seyfert_1.Declare)({
+    Declare({
         name: 'ping',
         description: 'Mostrar la latencia con discord',
-        ignore: seyfert_1.IgnoreCommand.Slash,
+        ignore: IgnoreCommand.Slash,
     })
 ], PingCmd);
-exports.default = PingCmd;
+export default PingCmd;

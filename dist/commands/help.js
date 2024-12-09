@@ -1,4 +1,3 @@
-"use strict";
 var __decorate = (this && this.__decorate) || function (decorators, target, key, desc) {
     var c = arguments.length, r = c < 3 ? target : desc === null ? desc = Object.getOwnPropertyDescriptor(target, key) : desc, d;
     if (typeof Reflect === "object" && typeof Reflect.decorate === "function") r = Reflect.decorate(decorators, target, key, desc);
@@ -14,13 +13,12 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
-Object.defineProperty(exports, "__esModule", { value: true });
-const seyfert_1 = require("seyfert");
-const cooldown_1 = require("@slipher/cooldown");
-let HelpCommand = class HelpCommand extends seyfert_1.Command {
+import { Declare, Command, IgnoreCommand, Embed } from 'seyfert';
+import { Cooldown, CooldownType } from '@slipher/cooldown';
+let HelpCommand = class HelpCommand extends Command {
     run(ctx) {
         return __awaiter(this, void 0, void 0, function* () {
-            const embed = new seyfert_1.Embed()
+            const embed = new Embed()
                 .setTitle('Comandos rlary bot')
                 .setDescription(`
       > \`r!reputation\`
@@ -34,15 +32,15 @@ let HelpCommand = class HelpCommand extends seyfert_1.Command {
     }
 };
 HelpCommand = __decorate([
-    (0, seyfert_1.Declare)({
+    Declare({
         name: 'help',
         description: 'ayuda',
-        ignore: seyfert_1.IgnoreCommand.Slash,
+        ignore: IgnoreCommand.Slash,
     }),
-    (0, cooldown_1.Cooldown)({
-        type: cooldown_1.CooldownType.User,
+    Cooldown({
+        type: CooldownType.User,
         interval: 1000 * 60,
         uses: 2,
     })
 ], HelpCommand);
-exports.default = HelpCommand;
+export default HelpCommand;
