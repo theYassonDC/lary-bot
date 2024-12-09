@@ -14,4 +14,5 @@ const client = new seyfert_1.Client({
 client.start().then(() => {
     client.cooldown = new cooldown_1.CooldownManager(client);
     client.uploadCommands();
+    console.log('Bot client on');
 }).catch(e => console.log(e));
