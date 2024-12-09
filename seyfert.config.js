@@ -1,8 +1,8 @@
 // @ts-check is better
-import { config } from 'seyfert';
-import "dotenv/config"
+const { config } = require('seyfert');
+require('dotenv').config()
 
-export default config.bot({
+module.exports = config.bot({
    token: process.env.BOT_TOKEN || "laryxd",
    intents: ["GuildMembers", "Guilds",  "MessageContent", "GuildMessages"],
    locations: {
