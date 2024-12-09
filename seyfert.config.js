@@ -7,7 +7,7 @@ module.exports = config.bot({
    intents: ["GuildMembers", "Guilds",  "MessageContent", "GuildMessages"],
    locations: {
        base: "src",
-       output: "dist", // Si utiliza bun, defina "src" en su lugar
+       output: "src", // Si utiliza bun, defina "src" en su lugar
        commands: "commands",
        events: "events"
    }

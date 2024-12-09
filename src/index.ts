@@ -15,14 +15,14 @@ const client = new Client({
 
 client.start().then(() => {
   client.cooldown = new CooldownManager(client);
-  client.loadEvents()
+  client.uploadCommands()
 });
 declare module 'seyfert' {
   interface UsingClient extends ParseClient<Client<true>> {
     cooldown: CooldownManager;
   }
   interface InternalOptions {
-    withPrefix: true;
+    withPrefix: true | false;
     asyncCache: true | false;
   }
   interface Client {

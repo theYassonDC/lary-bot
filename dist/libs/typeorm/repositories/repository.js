@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: true });
 exports.createUser = createUser;
 exports.updateUser = updateUser;
 exports.getUser = getUser;
+exports.getUsers = getUsers;
 const connect_1 = require("../connect");
 const Users_1 = require("../entities/users/Users");
 const userRepository = connect_1.AppDataSource.getRepository(Users_1.Users);
@@ -43,6 +44,18 @@ async function getUser(id) {
             return false;
         }
         return user;
+    }
+    catch (error) {
+        console.log(error);
+    }
+}
+async function getUsers() {
+    try {
+        const users = await userRepository.find();
+        if (!users) {
+            return false;
+        }
+        return users;
     }
     catch (error) {
         console.log(error);

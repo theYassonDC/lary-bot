@@ -14,5 +14,5 @@ const client = new seyfert_1.Client({
 // Esto iniciará la conexión con la gateway de Discord y cargará comandos, eventos, componentes y langs
 client.start().then(() => {
     client.cooldown = new cooldown_1.CooldownManager(client);
-    client.loadEvents();
+    client.uploadCommands();
 });

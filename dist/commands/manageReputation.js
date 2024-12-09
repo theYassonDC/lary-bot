@@ -11,13 +11,17 @@ const libs_1 = require("../libs");
 const cooldown_1 = require("@slipher/cooldown");
 const utils_1 = require("../utils");
 const option = {
-    id: (0, seyfert_1.createStringOption)({
-        description: 'id',
-        required: true,
+    usuario: (0, seyfert_1.createUserOption)({
+        description: 'Usuario que quieres interactuar los puntos',
+        required: true
     }),
     type: (0, seyfert_1.createStringOption)({
         description: 'type manage',
-        required: true
+        required: true,
+        choices: [
+            { name: 'Agregar puntos de reputación', value: 'add' },
+            { name: 'Quitar puntos de reputación', value: 'remove' }
+        ]
     }),
     amount: (0, seyfert_1.createNumberOption)({
         description: 'number amount',
@@ -27,27 +31,27 @@ const option = {
 let ConfigCommand = class ConfigCommand extends seyfert_1.Command {
     async run(ctx) {
         const options = ctx.options;
-        if (!options.id || !options) {
+        if (!options.usuario || !options) {
             return ctx.write({ content: 'Te falto el usuario el comando es `r!reputation-manage -id <user-id> -type <add o remove> -amount <cuantity>`' });
         }
         const channel = await ctx.client.channels.fetch(utils_1.config.logs);
         if (options.type === "add") {
-            await (0, libs_1.updateUser)(options.id, 'add', options.amount);
+            await (0, libs_1.updateUser)(options.usuario.id, 'add', options.amount);
             if (channel.isTextGuild()) {
                 channel.messages.write({
-                    content: `:green_circle: **\`[LOGS]\`** El usuario **<@${options.id}>** se le agrego la cantidad de ${options.amount}`
+                    content: `:green_circle: **\`[LOGS]\`** El usuario ${options.usuario} se le agrego la cantidad de ${options.amount}`
                 });
             }
-            return ctx.write({ content: `:white_check_mark: El usuario <@${options.id}> se le agrego la cantidad ${options.amount} de reputación correctamente` });
+            return ctx.write({ content: `:white_check_mark: El usuario ${options.usuario} se le agrego la cantidad ${options.amount} de reputación correctamente` });
         }
         else if (options.type === "remove") {
-            await (0, libs_1.updateUser)(options.id, 'remove', options.amount);
+            await (0, libs_1.updateUser)(options.usuario.id, 'remove', options.amount);
             if (channel.isTextGuild()) {
                 channel.messages.write({
-                    content: `:red_circle: **\`[LOGS]\`**El usuario **<@${options.id}>** se le removio la cantidad de ${options.amount} puntos`
+                    content: `:red_circle: **\`[LOGS]\`**El usuario ${options.usuario} se le removio la cantidad de ${options.amount} puntos`
                 });
             }
-            return ctx.write({ content: `:white_check_mark: El usuario <@${options.id}> se le elimino la cantidad ${options.amount} de reputación correctamente` });
+            return ctx.write({ content: `:white_check_mark: El usuario ${options.usuario} se le elimino la cantidad ${options.amount} de reputación correctamente` });
         }
     }
 };
@@ -58,10 +62,8 @@ ConfigCommand = __decorate([
         uses: 1,
     }),
     (0, seyfert_1.Declare)({
-        name: 'reputation-manage',
-        description: 'Config reputation ',
-        ignore: seyfert_1.IgnoreCommand.Slash,
-        aliases: ["rm"],
+        name: 'reputation_manage',
+        description: 'Agrega o elimina reputación a un usuario',
         defaultMemberPermissions: ["ManageGuild"]
     }),
     (0, seyfert_1.Options)(option)

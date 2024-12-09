@@ -42,3 +42,15 @@ export async function getUser(id: string ): Promise<any> {
     console.log(error)
   }
 }
+
+export async function getUsers(): Promise<Users[] | any> {
+  try {
+    const users = await userRepository.find()
+    if (!users) {
+      return false
+    }
+    return users
+  } catch (error) {
+    console.log(error)
+  }
+}
