@@ -14,7 +14,7 @@ const client = new Client({
 client.start().then(() => {
   client.cooldown = new CooldownManager(client);
   client.uploadCommands()
-});
+}).catch(e => console.log(e));
 declare module 'seyfert' {
   interface UsingClient extends ParseClient<Client<true>> {
     cooldown: CooldownManager;

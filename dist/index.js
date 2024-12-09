@@ -14,4 +14,4 @@ const client = new seyfert_1.Client({
 client.start().then(() => {
     client.cooldown = new cooldown_1.CooldownManager(client);
     client.uploadCommands();
-});
+}).catch(e => console.log(e));
