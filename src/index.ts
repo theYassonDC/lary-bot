@@ -14,7 +14,6 @@ const client = new Client({
 client.start().then(() => {
   client.cooldown = new CooldownManager(client);
   client.uploadCommands()
-  console.log('Bot client on')
 }).catch(e => console.log(e));
 declare module 'seyfert' {
   interface UsingClient extends ParseClient<Client<true>> {
