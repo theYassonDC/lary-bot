@@ -18,7 +18,7 @@ exports.AppDataSource = new typeorm_1.DataSource({
     migrations: [],
 });
 exports.AppDataSource.initialize().then(() => {
-    console.log("Data Source has been initialized!");
+    console.log(`[${new Date()}] TYPEORM [POSTGRESQL] Data Source has been initialized!`);
 })
     .catch((err) => {
     console.error("Error during Data Source initialization", err);
