@@ -12,6 +12,16 @@ export const shopList = [
     price: 20
   }
 ]
+
+export const joinedReply = [
+  "Hola pendejitos llego un nuevo al server se llama {user} saludenloo!!",
+  "Al fin alguien entro a esta posilga saluden al {user} o los puteo jeje",
+  "Te agradezco que hayas entrado ahora habla {user}",
+  "Denle la bienvenida al nuevo {user} <@&1311565754642202686> xfa",
+  "Te presento el chat {user} habla q no muerden",
+  "Bien venido al chat {user}",
+  "hola {user}"
+]
 const random = Math.floor(Math.random() * (10 - 25 + 1) + 25)
 export const rewards_pandora_1 = [
   ":poop: Nadita",
