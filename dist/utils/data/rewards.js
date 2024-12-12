@@ -6,13 +6,13 @@ exports.shopList = [
         id: 1,
         name: '<:Chestlvl1:1316321305880166440> Caja de pandora Nvl 1',
         description: 'Premios sencillos jeje',
-        price: 15
+        price: 80
     },
     {
         id: 2,
         name: '<:Chestlvl2:1316321310619471902> Caja de pandora Nvl 2',
         description: 'Probabilidad de que salga discord nitro es de {probability}',
-        price: 20
+        price: 100
     }
 ];
 exports.joinedReply = [
