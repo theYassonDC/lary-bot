@@ -10,6 +10,7 @@ const seyfert_1 = require("seyfert");
 const libs_1 = require("../libs");
 const cooldown_1 = require("@slipher/cooldown");
 const utils_1 = require("../utils");
+const types_1 = require("seyfert/lib/types");
 const option = {
     usuario: (0, seyfert_1.createUserOption)({
         description: 'Usuario que quieres interactuar los puntos',
@@ -31,6 +32,10 @@ const option = {
 let ConfigCommand = class ConfigCommand extends seyfert_1.Command {
     async run(ctx) {
         const options = ctx.options;
+        const roles = await ctx.member?.roles.list();
+        const isHaveRol = roles?.filter(e => e.id === utils_1.config.manageRep_rol);
+        if (isHaveRol?.length === 0)
+            return ctx.write({ content: `:x: No tienes permitido usar este comando`, flags: types_1.MessageFlags.Ephemeral });
         if (!options.usuario || !options) {
             return ctx.write({ content: 'Te falto el usuario el comando es `r!reputation-manage -id <user-id> -type <add o remove> -amount <cuantity>`' });
         }
@@ -64,7 +69,6 @@ ConfigCommand = __decorate([
     (0, seyfert_1.Declare)({
         name: 'reputation_manage',
         description: 'Agrega o elimina reputación a un usuario',
-        defaultMemberPermissions: ["ManageGuild"]
     }),
     (0, seyfert_1.Options)(option)
 ], ConfigCommand);

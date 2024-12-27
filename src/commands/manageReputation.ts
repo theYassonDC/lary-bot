@@ -2,6 +2,7 @@ import { Declare, Command, type CommandContext, createStringOption, createNumber
 import { updateUser } from '../libs';
 import { Cooldown, CooldownType } from '@slipher/cooldown';
 import { config } from '../utils';
+import { MessageFlags } from 'seyfert/lib/types';
 
 const option = {
   usuario: createUserOption({
@@ -30,12 +31,14 @@ const option = {
 @Declare({
   name: 'reputation_manage',
   description: 'Agrega o elimina reputación a un usuario',
-  defaultMemberPermissions: ["ManageGuild"]
 })
 @Options(option)
 export default class ConfigCommand extends Command {
   async run(ctx: CommandContext<typeof option>) {
     const options = ctx.options
+    const roles = await ctx.member?.roles.list()
+    const isHaveRol = roles?.filter(e => e.id === config.manageRep_rol)
+    if (isHaveRol?.length === 0) return ctx.write({ content: `:x: No tienes permitido usar este comando`, flags: MessageFlags.Ephemeral })
     if (!options.usuario || !options) {
       return ctx.write({ content: 'Te falto el usuario el comando es `r!reputation-manage -id <user-id> -type <add o remove> -amount <cuantity>`' })
     }    const channel = await ctx.client.channels.fetch(config.logs)
